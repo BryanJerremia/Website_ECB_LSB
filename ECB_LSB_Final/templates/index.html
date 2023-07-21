@@ -1,0 +1,154 @@
+<!--python app.py-->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Code Book dan Least Significant Bit</title>
+
+    <!-- custom css file link  
+    <link rel="stylesheet" href="../static/indek.css">
+    -->
+
+    <!-- custom js file link-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" type="text/javascript" src="../static/index.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container img {
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        .container p {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056B3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ELECTRONIC CODE BOOK</h1>
+
+        <form action="/encrypt" method="post">
+            <div class="form-group">
+                <label for="plaintext">Plaintext:</label>
+                <textarea name="plaintext"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="encryptionKey">Kunci Enkripsi:</label>
+                <input type="text" name="encryptionKey">
+            </div>
+
+            <button type="submit">Enkripsi</button>
+        </form>
+
+        <div class="form-group">
+            {% if result_encrypt %}
+            <h2>Hasil Enkripsi:</h2>
+            <p>{{ result_encrypt }}</p>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <form action="/decrypt" method="post">
+            <div class="form-group">
+                <label for="ciphertext">Ciphertext:</label>
+                <textarea name="ciphertext"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="decryptionKey">Kunci Dekripsi:</label>
+                <input type="text" name="decryptionKey">
+            </div>
+
+            <button type="submit">Dekripsi</button>
+        </form>
+
+        <div class="form-group">
+            {% if result_decrypt %}
+            <h2>Hasil Dekripsi:</h2>
+            <p>{{ result_decrypt }}</p>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <h1>LEAST SIGNIFICANT BIT</h1>
+
+        <div class="container">
+            <h1>Encode dan Decode</h1>
+            <form action="/process" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="image">Upload Image:</label>
+                    <input type="file" name="image" id="image">
+                </div>
+                <div class="form-group">
+                    <label for="message">Masukan Pesan:</label>
+                    <textarea name="message" id="message"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="action">Action:</label>
+                    <select name="action" id="action">
+                        <option value="encode">Encode</option>
+                        <option value="decode">Decode</option>
+                    </select>
+                </div>
+                <button type="submit">Process</button>
+                
+            </form>
+            <br>
+            <form id="resetForm" action="/reset" method="post">
+                <button type="submit">Clear</button>
+            </form>
+
+            {% if result %}
+            <h2>Hasil:</h2>
+            <p>{{ result }}</p>
+            {% if action == 'encode' %}
+            <img src="{{ url_for('static', filename='gambar_hasil.png') }}" alt="Result Image">
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
